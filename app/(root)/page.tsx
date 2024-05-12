@@ -1,16 +1,13 @@
-'use client'
 import Image from "next/image";
 import HeaderBox from "../../components/HeaderBox";
-import { useState } from "react";
 import TotalBalanceBox from "../../components/TotalBalanceBox";
 import RightSidebar from "@/components/RightSidebar";
+import { getLoggedInUser } from "@/lib/actions/user.action";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const [loggedIn, setLoggedIn] = useState({
-      firstName:'Manish',
-      lastName:'Dhaka',
-      email:'manish@gmail.com',
-  })
+ const Home = async () => {
+  const user = await getLoggedInUser()
+  if (!user) redirect('/signin')
   return (
     <section className="home">
       <div className="home-content">
@@ -18,7 +15,7 @@ export default function Home() {
           <HeaderBox
           type='greeting'
           title='Welcome'
-          user={loggedIn ? loggedIn.firstName : 'Guest'}
+          user={user}
           subtext="welcome to the Horison services we provide the best sevices to out cutomers"
           />
           <TotalBalanceBox
@@ -30,7 +27,7 @@ export default function Home() {
         Recent Transactions
       </div>
       <RightSidebar
-      user={loggedIn}
+      user={user}
       banks={[{currentBalance:4599.43},{currentBalance:6535.55}]}
       transactions={[]}
       />
@@ -38,3 +35,4 @@ export default function Home() {
     </section>
   );
 }
+export default Home

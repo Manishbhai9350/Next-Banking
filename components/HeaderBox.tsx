@@ -8,7 +8,7 @@ const HeaderBox = ({user,title,type = 'greeting',subtext}:HeaderBoxProps) => {
             {
                 type === 'greeting' &&
                 <span className='header-box-greeting text-bankGradient'>
-                   &nbsp; {user}
+                   &nbsp; {user?.name || 'Guest'}
                 </span>
             }
         </h1>
